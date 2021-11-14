@@ -16,21 +16,6 @@ def insert_at_end(entry, char):
     entry.insert(len(entry.get()), char)
 
 
-def plus_minus(entry):
-    txt = entry.get()
-    if len(txt) < 1:
-        return
-
-    if txt[0] not in ["+", "-"]:
-        entry.insert(0, "-")
-    elif txt[0] == "+":
-        entry.delete(0)
-        entry.insert(0, "-")
-    elif txt[0] == "-":
-        entry.delete(0)
-        entry.insert(0, "+")
-
-
 def equal(entry):
     length = len(entry.get())
     result = eval(entry.get())
@@ -60,9 +45,12 @@ class ButtonValues:
 
 other_buttons = {
     "0": ButtonValues(1, 5, partial(insert_at_end, entry1, 0)),
-    ".": ButtonValues(2, 5, partial(insert_at_end, entry1, ".")),
-    "=": ButtonValues(3, 5, partial(equal, entry1)),
-    "+/-": ButtonValues(0, 5, partial(plus_minus, entry1)),
+    ".": ButtonValues(0, 5, partial(insert_at_end, entry1, ".")),
+    "=": ButtonValues(2, 5, partial(equal, entry1)),
+    "+": ButtonValues(3, 5, partial(insert_at_end, entry1, " + ")),
+    "-": ButtonValues(3, 4, partial(insert_at_end, entry1, " - ")),
+    "*": ButtonValues(3, 3, partial(insert_at_end, entry1, " * ")),
+    "/": ButtonValues(3, 2, partial(insert_at_end, entry1, " / ")),
 }
 
 for sign, values in other_buttons.items():
