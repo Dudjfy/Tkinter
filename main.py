@@ -38,6 +38,10 @@ def equal(entry):
     entry.insert(0, result)
 
 
+def delete(entry):
+    entry.delete(len(entry.get()) - 1)
+
+
 # Numbered buttons
 for y in range(3):
     for x in range(3):
@@ -59,10 +63,15 @@ class ButtonValues:
 
 
 other_buttons = {
+    "+/-": ButtonValues(0, 5, partial(plus_minus, entry1)),
     "0": ButtonValues(1, 5, partial(insert_at_end, entry1, 0)),
     ".": ButtonValues(2, 5, partial(insert_at_end, entry1, ".")),
     "=": ButtonValues(3, 5, partial(equal, entry1)),
-    "+/-": ButtonValues(0, 5, partial(plus_minus, entry1)),
+    "+": ButtonValues(3, 4, partial(insert_at_end, entry1, " + ")),
+    "-": ButtonValues(3, 3, partial(insert_at_end, entry1, " - ")),
+    "*": ButtonValues(3, 2, partial(insert_at_end, entry1, " * ")),
+    "/": ButtonValues(3, 1, partial(insert_at_end, entry1, " / ")),
+    "del": ButtonValues(0, 1, partial(delete, entry1)),
 }
 
 for sign, values in other_buttons.items():
