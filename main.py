@@ -72,6 +72,8 @@ other_buttons = {
     "*": ButtonValues(3, 2, partial(insert_at_end, entry1, " * ")),
     "/": ButtonValues(3, 1, partial(insert_at_end, entry1, " / ")),
     "del": ButtonValues(0, 1, partial(delete, entry1)),
+    "(": ButtonValues(1, 1, partial(insert_at_end, entry1, "(")),
+    ")": ButtonValues(2, 1, partial(insert_at_end, entry1, ")")),
 }
 
 for sign, values in other_buttons.items():
