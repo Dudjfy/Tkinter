@@ -3,7 +3,6 @@ from tkinter import *
 
 root = Tk()
 
-
 b_size_x, b_size_y = 6, 3
 
 # Label
@@ -13,8 +12,23 @@ entry1.grid(row=0, column=0, columnspan=4, ipady=10)
 
 
 # Functions
-def num_click(entry, num):
-    entry.insert(len(entry.get()), num)
+def insert_at_end(entry, char):
+    entry.insert(len(entry.get()), char)
+
+
+def plus_minus(entry):
+    txt = entry.get()
+    if len(txt) < 1:
+        return
+
+    if txt[0] not in ["+", "-"]:
+        entry.insert(0, "-")
+    elif txt[0] == "+":
+        entry.delete(0)
+        entry.insert(0, "-")
+    elif txt[0] == "-":
+        entry.delete(0)
+        entry.insert(0, "+")
 
 
 def equal(entry):
@@ -32,7 +46,7 @@ for y in range(3):
                text=str(num),
                width=b_size_x,
                height=b_size_y,
-               command=partial(num_click, entry1, num)).grid(row=4 - y, column=x)
+               command=partial(insert_at_end, entry1, num)).grid(row=4 - y, column=x)
 
 
 class ButtonValues:
@@ -45,9 +59,10 @@ class ButtonValues:
 
 
 other_buttons = {
-    "0": ButtonValues(1, 5, partial(num_click, entry1, 0)),
-    ".": ButtonValues(2, 5, partial(num_click, entry1, ".")),
+    "0": ButtonValues(1, 5, partial(insert_at_end, entry1, 0)),
+    ".": ButtonValues(2, 5, partial(insert_at_end, entry1, ".")),
     "=": ButtonValues(3, 5, partial(equal, entry1)),
+    "+/-": ButtonValues(0, 5, partial(plus_minus, entry1)),
 }
 
 for sign, values in other_buttons.items():
